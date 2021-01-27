@@ -4,17 +4,7 @@
     <p>Welkom {{ name }} bij de cursus</p>
     <p>{{ team }} Rulez!!</p>
 
-    <div
-      class="contestant"
-      v-for="contestant in contestants"
-      :key="contestant.id"
-    >
-      <div class="contestant-info">
-        <div class="name">{{ contestant.name }}</div>
-        <div class="team">{{ contestant.team }}</div>
-      </div>
-      <div class="remove" @click="removeContestant(contestant.id)">X</div>
-    </div>
+    <Contestants v-bind:data="this.contestants" v-on:removeContestant="removeContestant" />
 
     <div class="form">
       <h2>Voeg deelnemer toe</h2>
@@ -23,6 +13,9 @@
       <div class="name">Team:</div>
       <input type="text" v-model="newContestantTeam" />
       <button @click="newContestant">Voeg toe</button>
+
+      <!-- <Button to="/test" text="To test" />
+      <Button to="/about" text="To about" type="back" /> -->
     </div>
   </div>
 </template>
@@ -36,61 +29,50 @@ export default {
       team: "Engagement",
       newContestantName: "",
       newContestantTeam: "",
-      contestants: [
-        {
-          id: 3,
-          name: "Mark",
-          team: "Platforms",
-        },
-        {
-          id: 1,
-          name: "Pim",
-          team: "Platforms",
-        },
-        {
-          id: 2,
-          name: "Tom",
-          team: "Platforms",
-        },
-        {
-          id: 6,
-          name: "Dennis",
-          team: "Engagement",
-        },
-        {
-          id: 4,
-          name: "Nick",
-          team: "Engagement",
-        },
-        {
-          id: 5,
-          name: "Jeffrey",
-          team: "Engagement",
-        },
-      ],
+      contestants: [],
     };
   },
   methods: {
     newContestant() {
       if (this.newContestantName && this.newContestantTeam) {
-        this.contestants.push({
-          id: this.contestants.length + 1,
-          name: this.newContestantName,
-          team: this.newContestantTeam,
-        });
+        this.axios
+          .post("http://dump.lwdev.nl/vue-cursus-api/addDeelnemer/", {
+            naam: this.newContestantName,
+            afdeling: this.newContestantTeam,
+          })
+          .then((response) => {
+            this.getContestants();
 
-        this.newContestantName = "";
-        this.newContestantTeam = "";
+            this.newContestantName = "";
+            this.newContestantTeam = "";
+          });
       } else {
         console.error("Niet alle velden zijn ingevuld");
       }
     },
 
     removeContestant(id) {
-      const removeObject = this.contestants.find(contestant => contestant.id == id);
-      const removeIndex = this.contestants.indexOf(removeObject);
-      this.contestants.splice(removeIndex, 1);      
+      this.axios
+        .post("http://dump.lwdev.nl/vue-cursus-api/deleteDeelnemer/", {
+          id: id,
+        })
+        .then((response) => {
+          this.getContestants();
+        });
     },
+
+    getContestants() {
+      this.axios
+        .get("http://dump.lwdev.nl/vue-cursus-api/deelnemers/")
+        .then((response) => {
+          this.contestants = response.data;
+        });
+    },
+  },
+  beforeCreate() {},
+
+  created() {
+    this.getContestants();
   },
 };
 </script>

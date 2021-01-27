@@ -1,25 +1,21 @@
 <template>
   <div>
-    <nav>
-      <div class="title">Vue cursus</div>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </nav>
+    <Nav />
     <router-view />
   </div>
 </template>
 
-<style lang="scss">
-nav {
-   background-color:#efefef;
-   height: 48px;
+<script>
+import Nav from "@/components/Nav.vue";
 
-   .title {
-	   padding: 1rem;
-	   font-weight: bold;
-	   text-transform: uppercase;
-	   color: #000000;
-	   display: inline-block;
-   }
- }
+export default {
+  name: "App",
+  components: {
+    Nav,
+  },
+};
+</script>
+
+<style lang="scss">
+
 </style>
