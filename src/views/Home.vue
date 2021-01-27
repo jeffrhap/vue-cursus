@@ -38,7 +38,7 @@ export default {
       newContestantTeam: "",
       contestants: [
         {
-          id: 0,
+          id: 3,
           name: "Mark",
           team: "Platforms",
         },
@@ -53,7 +53,7 @@ export default {
           team: "Platforms",
         },
         {
-          id: 3,
+          id: 6,
           name: "Dennis",
           team: "Engagement",
         },
@@ -87,7 +87,9 @@ export default {
     },
 
     removeContestant(id) {
-      this.contestants.splice(id, 1);      
+      const removeObject = this.contestants.find(contestant => contestant.id == id);
+      const removeIndex = this.contestants.indexOf(removeObject);
+      this.contestants.splice(removeIndex, 1);      
     },
   },
 };
