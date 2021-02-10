@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Test from '../views/Test.vue'
+import Contestant from '../views/Contestant.vue'
+import Upload from '../views/Upload.vue'
 
 Vue.use(VueRouter)
 
@@ -13,14 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About
+    path: '/contestant/:id',
+    name: 'Contestant',
+    component: Contestant
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: Test
+    path: '/upload',
+    name: 'Upload',
+    component: Upload
   }
 ]
 

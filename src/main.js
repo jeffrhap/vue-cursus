@@ -6,12 +6,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import Button from '@/components/Button.vue';
+import Header from '@/components/Header.vue';
 import Contestants from '@/components/Contestants.vue';
 
 import '@/assets/scss/main.scss'
 
-Vue.component('Button', Button)
+Vue.component('Header', Header)
 Vue.component('Contestants', Contestants)
 
 // https://www.npmjs.com/package/vue-axios

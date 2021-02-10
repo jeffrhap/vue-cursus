@@ -1,21 +1,14 @@
 <template>
   <div class="page">
-    <h1>Home</h1>
-    <p>Welkom {{ name }} bij de cursus</p>
-    <p>{{ team }} Rulez!!</p>
+    <Header />
 
-    <Contestants v-bind:data="this.contestants" v-on:removeContestant="removeContestant" />
-
-    <div class="form">
-      <h2>Voeg deelnemer toe</h2>
-      <div class="name">Naam:</div>
-      <input type="text" v-model="newContestantName" />
-      <div class="name">Team:</div>
-      <input type="text" v-model="newContestantTeam" />
-      <button @click="newContestant">Voeg toe</button>
-
-      <!-- <Button to="/test" text="To test" />
-      <Button to="/about" text="To about" type="back" /> -->
+    <div class="contestant-holder">
+      <h1>Zoek deelnemer</h1>
+      <input class="search" type="text" v-model="searchInput" />
+      <Contestants
+        :data="filterContestants"
+        @contestantDetails="contestantDetails"
+      />
     </div>
   </div>
 </template>
@@ -25,42 +18,24 @@ export default {
   name: "Home",
   data() {
     return {
-      name: "Jeffrey",
-      team: "Engagement",
-      newContestantName: "",
-      newContestantTeam: "",
+      searchInput: "",
       contestants: [],
     };
   },
+  computed: {
+    filterContestants() {
+      const search = this.searchInput.toLowerCase().trim();
+
+      if (!search) return this.contestants;
+
+      return this.contestants.filter(
+        (contestant) =>
+          contestant.naam.toLowerCase().trim().indexOf(search) > -1 ||
+          contestant.afdeling.toLowerCase().trim().indexOf(search) > -1
+      );
+    },
+  },
   methods: {
-    newContestant() {
-      if (this.newContestantName && this.newContestantTeam) {
-        this.axios
-          .post("http://dump.lwdev.nl/vue-cursus-api/addDeelnemer/", {
-            naam: this.newContestantName,
-            afdeling: this.newContestantTeam,
-          })
-          .then((response) => {
-            this.getContestants();
-
-            this.newContestantName = "";
-            this.newContestantTeam = "";
-          });
-      } else {
-        console.error("Niet alle velden zijn ingevuld");
-      }
-    },
-
-    removeContestant(id) {
-      this.axios
-        .post("http://dump.lwdev.nl/vue-cursus-api/deleteDeelnemer/", {
-          id: id,
-        })
-        .then((response) => {
-          this.getContestants();
-        });
-    },
-
     getContestants() {
       this.axios
         .get("http://dump.lwdev.nl/vue-cursus-api/deelnemers/")
@@ -68,8 +43,11 @@ export default {
           this.contestants = response.data;
         });
     },
+
+    contestantDetails(id) {
+      this.$router.push({ path: `/contestant/${id}` });
+    },
   },
-  beforeCreate() {},
 
   created() {
     this.getContestants();
@@ -78,27 +56,18 @@ export default {
 </script>
 
 <style lang="scss">
-  .contestant {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    margin-bottom: 16px;
-    background-color: lightblue;
+  .contestant-holder {
+    max-width: 760px;
+    margin: -50px auto 0;
+    padding: 40px 60px;
+    background-color: #ffffff;
 
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .remove {
-      cursor: pointer;
-    }
-  }
-
-  .form {
-    button {
-      display: block;
+    .search {
+      margin-bottom: 32px;
+      width: 100%;
+      padding: 8px;
+      border: 1px solid lightgrey;
+      border-radius: 4px;
     }
   }
 </style>
