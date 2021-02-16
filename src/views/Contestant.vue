@@ -3,6 +3,7 @@
     <Header />
 
     <div class="contestant-holder">
+      <router-link class="back" to="/">< Terug</router-link>
       <h1 class="title">Deelnemer details</h1>
       <div class="content-holder">
         <div class="content-row">
@@ -57,6 +58,13 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
+  }
+
+  .back {
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #febb33;  
   }
 
   .title {
