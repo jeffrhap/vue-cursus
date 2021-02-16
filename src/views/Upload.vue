@@ -12,7 +12,6 @@
           v-for="contestant in this.contestants"
           :key="contestant.id"
           :value="contestant.id"
-          @change="setUser(contestant.id)"
         >
           {{ contestant.naam }}
         </option>
@@ -64,9 +63,6 @@ export default {
         .then((response) => {
           this.contestants = response.data;
         });
-    },
-    setUser(id) {
-      console.log(id);
     },
     sendingEvent(file, xhr, formData) {
       formData.append("id", this.contestantId);
