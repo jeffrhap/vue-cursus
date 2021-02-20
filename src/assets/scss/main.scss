@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -5,6 +7,7 @@
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -12,5 +15,15 @@ a {
 }
 
 .page {
-    padding: 16px;
+    background-color: #e7e7e7;
+    min-height: calc(100vh - 36px);
+}
+
+h1 {
+    margin: 0;
+    padding-bottom: 8px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #febb33;
 }

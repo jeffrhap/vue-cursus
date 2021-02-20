@@ -1,9 +1,12 @@
 <template>
   <nav>
-    <div class="title">Vue cursus</div>
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-    <router-link to="/test">Test</router-link>
+    <router-link to="/">
+      <img class="logo" src="../assets/images/logo.svg" alt="Livewall" />
+    </router-link>
+    <div class="menu-holder">
+      <router-link class="link" to="/">Deelnemers</router-link>
+      <router-link class="link" to="/upload">Upload foto</router-link>
+    </div>
   </nav>
 </template>
 
@@ -15,19 +18,25 @@ export default {
 
 <style lang="scss">
 nav {
-   background-color:#efefef;
-   height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   background-color:#febb33;
+   height: 36px;
+   padding: 8px 16px;
 
-   .title {
-	   padding: 1rem;
-	   font-weight: bold;
-	   text-transform: uppercase;
-	   color: #000000;
-	   display: inline-block;
+   .logo {
+     width: 24px;
+     height: 24px;
    }
 
-   a {
-       margin: 0 6px;
+   .menu-holder {
+     .link {
+       margin: 0 8px;
+       font-weight: bold;
+       text-decoration: none;
+       text-transform: uppercase;
+     }
    }
  }
 </style>
