@@ -18,6 +18,8 @@
           <div class="heading">Persoonlijke tekst</div>
           <div class="content">{{ this.contestant.tekst }}</div>
         </div>
+        <button v-if="$store.state.favorites.includes(parseInt($route.params.id))" @click="$store.dispatch('removeFromFavorites', $route.params.id)">Remove from favorites</button>
+        <button v-else @click="$store.dispatch('addToFavorites', $route.params.id)">Add to favorites</button>
       </div>
       <div class="image-holder">
         <img :src="this.contestant.img" />
